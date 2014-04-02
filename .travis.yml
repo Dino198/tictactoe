@@ -1,0 +1,23 @@
+language: python
+python:
+- '2.7'
+before_script:
+- cd ..
+- wget http://googleappengine.googlecode.com/files/google_appengine_1.8.8.zip
+- unzip google_appengine_1.8.8.zip
+- rm google_appengine_1.8.8.zip
+- sudo apt-get install python-imaging
+install:
+- sudo pip install -r requirements.txt --use-mirrors
+- sudo pip install nose
+- sudo pip install WebTest
+- sudo pip install nosegae
+script:
+- git clone https://github.com/Dino198/tictactoe.git deploy
+- cd deploy
+- /usr/local/bin/nosetests
+after_success:
+- google_appengine/appcfg.py --oauth2_refresh_token=$MY_GAE_TOKEN update deploy/
+env:
+  global:
+    secure: yYw6uCKE9UkXteNt96Gd/b2sjHpTKEYtrZCmNok1P70GV8C14mR/2Qvv+2TiaRAnp8XHvbHcITCguZKhjTe34XAv22rsqYQByk3aAGcNG3x8WR8KXRR40DWBOysn4mJSHWSZ7aw90SoJGYFuEv47Iul/OaXfxSc18zTbrvBQShA=
